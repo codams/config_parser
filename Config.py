@@ -24,25 +24,30 @@ class Config:
         """
         self.config[section][key] = data
 
-    def get_file_config(self, file_name):
+    def get_file_config(self, file_name, ext=None):
         """
         Set self.config with ini file config
         format : https://docs.python.org/3.5/library/configparser.html#supported-ini-file-structure
-        // TODO -> another param to choose the extension and override the default .ini
         :param file_name: name of config file without extension
         """
         self.current_file = file_name
-        self.config.read(file_name + ".ini")
+        if ext:
+            self.config.read(file_name + "." + ext)
+        else:
+            self.config.read(file_name + ".ini")
 
-    def write_in_file(self, file_name):
+    def write_in_file(self, file_name, ext=None):
         """
         Write configuration in a given file
-        // TODO -> another param to choose the extension and override the default .ini
         :param file_name: name of file without extension
         """
         self.current_file = file_name
-        with open(file_name + ".ini", 'w') as configfile:
-            self.config.write(configfile)
+        if ext:
+            with open(file_name + "." + ext, 'w') as configfile:
+                self.config.write(configfile)
+        else:
+            with open(file_name + ".ini", 'w') as configfile:
+                self.config.write(configfile)
 
     def __config_as_string(self):
         """
